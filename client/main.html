@@ -1,0 +1,92 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Home - PoliticianConnect</title>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abel">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+  <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+  <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
+  <link rel="stylesheet" href="assets/css/mine.css">
+  <link rel="stylesheet" href="assets/css/dropdown.css">
+</head>
+
+<body>
+  {{>navbar}}
+  <header class="masthead">
+    {{>home}}
+    {{>questionsPolitician}}
+    <!--{{>questionsUser}}-->
+    {{> answered}}
+  </header>
+  {{>footer}}
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+  <script src="assets/js/new-age.js"></script>
+  <script src="main.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+</body>
+
+<!-- Home page content -->
+<template name="home">
+  {{#if loggedIn}}
+  <div class="container">
+    <div class="row">
+      <div class="jumbotron jumbotron-fluid first your-answered">
+        <div class="container">
+          <div style="margin-left: 3%;">
+            <!-- Governor Representative Senator1 Senator2-->
+            <h1 class="display-4">Your Representatives</h1>
+            <div style="margin-left: 5%; margin-top: 3%;">
+              <div style="width: 100%;">
+                <h1 style="text-align: left; display: inline-block">Phil Murphy</h1>
+                <h1 style="text-align: right; width:65%; display: inline-block">State Governor</h1>
+              </div>
+              <h1>Tom Malinowsky Representative</h1>
+              <h1>Cory Booker Senator</h1>
+              <h1>Robert Menendez Senator:</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  <div class="container text-center text-sm-center text-md-center text-lg-center text-xl-center d-flex h-100"
+    style="/*margin-left: 15%;*//*margin-right: 15%;*/max-width: 100wh;">
+    <div class="row text-center h-100" style="margin-top: 20%;">
+      <div class="col-auto col-lg-7 col-xl-6 my-auto"
+        style="width: 664px;min-height: 524px;height: auto;text-align: left;">
+        <div class="text-left mx-auto header-content" style="margin-top: 15%;">
+          {{#if signingUp}}
+          {{> signUpConfig}}
+          {{else}}
+          <h1 class="text-left mb-5" style="font-size: 70px;"><strong>PoliticianConnect</strong></h1>
+          <h3 style="margin-bottom: 78px;padding-right: 105px;"><em>Improving communication between politicians and
+              their constituents.&nbsp;</em></h3>
+          {{/if}}
+        </div>
+      </div>
+      <div class="col-auto col-lg-7 col-xl-6 my-auto"
+        style="width: 664px;min-height: 524px;height: auto;text-align: left;">
+        <!-- <h1 class="text-center" style="margin-top: 10%;color: rgb(55,3,64);font-weight: 700;font-size: 60px;">Sign Up</h1> -->
+        {{> atForm}}
+        <div class="text-left mx-auto header-content" style="margin-top: 10%;"></div>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+</template>

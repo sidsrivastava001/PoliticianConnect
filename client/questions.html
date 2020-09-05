@@ -1,0 +1,503 @@
+<!-- Questions page content -->
+<template name="questionsPolitician">
+    <div class="container">
+        <div class="row">
+            <div class="jumbotron jumbotron-fluid first your-questions">
+                <div class="container">
+                    <div style="margin-left: 3%;">
+                        <h1 class="display-4">Your Questions</h1>
+                        <ul>
+                            <li class="lead" style="margin-top: 1em; list-style-type:circle;">The number bolded on the
+                                right of each post is the
+                                number of upvotes for that question</li>
+                            <li class="lead" style=" display: list-item">Click "Show Description" to see the description
+                                of the question</li>
+                            <li class="lead" style="display: list-item">Click on the question title to reply to the
+                                question</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--End of Heading-->
+            <div class="button-grouper">
+                {{> filterButton}}
+            </div>
+            <!--Adding the filter button-->
+            <div class="lister">
+                <!--Blog: -->
+                {{displayPosts}}
+                {{#each returnPosts}}
+                <div class="post-preview">
+
+                    <div class="post-content">
+                        <a href="#">
+                            <h2 class="post-title">{{this.heading}}</h2>
+                        </a>
+                        
+                        <button type="button" class="btn btn-outline-light read-more-button" data-toggle="collapse"
+                            href="#desciption{{@index}}" role="button" aria-expanded="false" aria-controls="desciption{{@index}}">Show
+                            Description/Hide Description</button>
+            
+                        <div class="collapse" id="desciption{{@index}}">
+                            <p class="post-meta">{{this.body}}</p>
+                        </div>
+            
+                        <p class="tag-text">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-tag" fill="currentColor"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M2 2v4.586l7 7L13.586 9l-7-7H2zM1 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2z" />
+                                <path fill-rule="evenodd"
+                                    d="M4.5 5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+                            </svg>Tag: {{this.tag}}</p>
+            
+                        <p class="post-meta">Posted by:&nbsp; {{this.username}}</p>
+            
+                        <h6>{{this.date}}</h6>
+                    </div>
+            
+                    <div class="voting">
+                        <h4 class="upvote-counter">{{this.stars}}</h4>
+                    </div>
+                    <button type="button" id = "{{this.username}}" class="btn btn-primary btn-lg btn-block ask-a-question-button" data-toggle="collapse"
+                    data-target="#{{this.body}}" role="button" aria-expanded="false" aria-controls="collapseExample">Reply to this question</button>
+                    <div class="collapse" id="{{this.body}}">
+                        <div class="container text-center text-sm-center text-md-center text-lg-center text-xl-center d-flex h-100" style="/*margin-left: 15%;*//*margin-right: 15%;*/max-width: 100wh;">
+                            <div class="col-lg-8 offset-lg-11 my-auto" style="margin: auto;">
+                                <h1 style="text-align: center;">Answer this question</h1>
+                                <form>
+                                    <div class="form-group" style="padding: 0px;">
+                                        <!-- <select class="form-control"><optgroup label="This is a group">
+                                            <option value="12" selected="">This is item 1</option>
+                                            <option value="13">This is item 2</option>
+                                            <option value="14">This is item 3</option></optgroup>
+                                        </select> -->
+                                        <textarea placeholder="Question Description" class="form-control question-form" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        
+                                        <div style="text-align: center;">
+                                            <input type="file" class="custom-file-input" id="customFile">
+                                            <label class="custom-file-label" for="customFile">Choose file</label>
+                                            <button name = "{{this.body}}" class="btn btn-primary question-form-submit" type="submit" style="width: 100%;">SUBMIT</button>
+                                        </div>
+                                        
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                </div>
+    
+                </div>
+                <hr>
+                {{/each}}
+                <!--End of Blog-->
+                <br />
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<template name="questionsUser">
+    <div class="container">
+        <div class="row">
+            <div class="jumbotron jumbotron-fluid first your-questions">
+                <div class="container">
+                    <div style="margin-left: 3%;">
+                        <h1 class="display-4">Questions for Cory Booker</h1>
+                        <p class="lead" style="margin-top: 1em;">The number bolded on the right of each post is the
+                            number of upvotes for that question. Click the arrow to upvote a question.</p>
+                        <p class="lead">Click "Show Description" to see the description of the question</p>
+                    </div>
+                </div>
+            </div>
+            <!--End of Heading-->
+            <button type="button" class="btn btn-primary btn-lg btn-block ask-a-question-button" data-toggle="collapse"
+                href="#ask-a-question-form" role="button" aria-expanded="false" aria-controls="collapseExample">Ask a
+                question</button>
+
+            <!--PUT YOUR POST FORM CODER HERE-->
+            <div class="collapse" id="ask-a-question-form">
+                    <div class="container text-center text-sm-center text-md-center text-lg-center text-xl-center d-flex h-100" style="/*margin-left: 15%;*//*margin-right: 15%;*/max-width: 100wh;">
+                        <div class="col-lg-8 offset-lg-11 my-auto" style="margin: auto;">
+                            <h1 style="text-align: center;">Submit a new question for Cory Booker</h1>
+                            <form>
+                                <div class="form-group" style="padding: 0px;">
+                                    <!-- <select class="form-control"><optgroup label="This is a group">
+                                        <option value="12" selected="">This is item 1</option>
+                                        <option value="13">This is item 2</option>
+                                        <option value="14">This is item 3</option></optgroup>
+                                    </select> -->
+                                    <input class="form-control question-form" placeholder="Question Title" type="text">
+                                    <textarea placeholder="Question Description" class="form-control question-form" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    <div style="text-align: center;"><button class="btn btn-primary question-form-submit" type="submit" style="width: 100%;">SUBMIT</button></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="button-grouper">
+                {{> polticianButton}}
+                {{> filterButton}}
+                {{> sortByButton}}
+            </div>
+            <!--Adding the filter button-->
+            <div class="lister">
+                <!--Blog: -->
+                {{displayPosts}}
+                {{#each returnPosts}}
+                <div class="post-preview">
+
+                    <div class="post-content">
+                        <h2 class="post-title" style="color: #fdcc52">{{this.heading}}</h2>
+            
+                        <button type="button" class="btn btn-outline-light read-more-button" data-toggle="collapse"
+                            href="#desciption{{@index}}" role="button" aria-expanded="false" aria-controls="desciption{{@index}}">Show
+                            Description/Hide Description</button>
+            
+                        <div class="collapse" id="desciption{{@index}}">
+                            <p class="post-meta">{{this.body}}</p>
+                        </div>
+            
+                        <p class="tag-text">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-tag" fill="currentColor"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M2 2v4.586l7 7L13.586 9l-7-7H2zM1 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2z" />
+                                <path fill-rule="evenodd"
+                                    d="M4.5 5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+                            </svg>Tag: {{this.tag}}</p>
+            
+                        <p class="post-meta">Posted by:&nbsp; {{this.username}}</p>
+            
+                        <h6>{{this.date}}</h6>
+                    </div>
+            
+                    <div class="voting">
+                        <button id="hello" type="button" name = "{{this.body}}" class="btn btn-outline-primary upvote-button">
+                            UPVOTE
+                            <!--<svg name = "{{this.body}}" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-up" fill="currentColor"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z">
+                                </path>
+                            </svg>-->
+                        </button>
+                        <p class="upvote-counter">{{this.stars}}</p>
+                    </div>
+                </div>
+                <hr>
+
+
+                {{/each}}
+                <!--End of Blog-->
+                <br />
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<!--Answered Page Content-->
+<template name="answered">
+    <div class="container">
+        <div class="row">
+            <div class="jumbotron jumbotron-fluid first your-answered">
+                <div class="container">
+                    <div style="margin-left: 3%;">
+                        <h1 class="display-4">Answers</h1>
+                        <p class="lead" style="margin-top: 1em;">The number bolded on the right of each post is the
+                            number of upvotes for that question before it was answered</p>
+                        <p class="lead">Click "Show Description" to see the description of the question</p>
+                        <p class="lead">Click on the "See Answer" to reply to the question</p>
+                    </div>
+                </div>
+            </div>
+            <!--End of Heading-->
+            <div class="button-grouper">
+                {{> polticianButton}}
+                {{> sortByButtonForAnswered}}
+                {{> filterButton}}
+            </div>
+            <!--Adding the filter button-->
+            <div class="lister">
+                <!--Blog: -->
+                {{displayPosts}}
+                {{#each returnPosts}}
+                <div class="post-preview">
+
+                    <div class="post-content">
+                        <h2 class="post-title" style="color: #fdcc52">{{this.heading}}</h2>
+            
+                        <button type="button" class="btn btn-outline-light read-more-button" data-toggle="collapse"
+                            href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Show
+                            Description/Hide Description</button>
+            
+                        <button type="button" class="btn btn-outline-light read-more-button" data-toggle="collapse"
+                            href="#answer{{@index}}" role="button" aria-expanded="false" aria-controls="answer{{@index}}">Show
+                            Answer/Hide Answer</button>
+            
+                        <div class="collapse" id="collapseExample">
+                            <p class="post-meta">{{this.body}}</p>
+                        </div>
+            
+                        <div class="collapse" id="answer{{@index}}">
+                            <p class="post-meta">{{this.answer}}</p>
+                        </div>
+            
+                        <p class="tag-text">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-tag" fill="currentColor"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M2 2v4.586l7 7L13.586 9l-7-7H2zM1 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2z" />
+                                <path fill-rule="evenodd"
+                                    d="M4.5 5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+                            </svg>Tag: {{this.tag}}</p>
+            
+                        <p class="post-meta">Posted by:&nbsp; {{this.username}}</p>
+            
+                        <h6>{{this.date}}</h6>
+                    </div>
+            
+                    <div class="voting">
+                        <h4 class="upvote-counter">{{this.stars}}</h4>
+                    </div>
+                </div>
+                <hr>
+                {{/each}}
+                <!--End of Blog-->
+                <br />
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<template name="polticianButton">
+    <div class="btn-group">
+        <button type="button" class="btn btn-danger dropdown-toggle control-by-button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+            </svg>&nbsp;&nbsp;&nbsp;&nbsp;Politician
+        </button>
+        <div class="dropdown-menu">
+            <p class="dropdown-divider-text">Governors</p>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">{{getReps.governor}}</a>
+            <div class="dropdown-divider"></div>
+            <p class="dropdown-divider-text">Senators</p>
+            <div class="dropdown-divider"></div>
+            
+            <a class="dropdown-item" href="#">{{getReps.senator1}}</a>
+            <a class="dropdown-item" href="#">{{getReps.senator2}}</a>
+            <div class="dropdown-divider"></div>
+            <p class="dropdown-divider-text">Representatives</p>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">{{getReps.representative}}</a>
+            <!-- <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Separated link</a> -->
+        </div>
+    </div>
+</template>
+
+<template name="filterButton">
+    <!--Filter Button-->
+    <div class="btn-group">
+        <button type="button" class="btn btn-info dropdown-toggle control-by-button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-funnel" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z" />
+            </svg>&nbsp;&nbsp;&nbsp;&nbsp;Filter
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">None</a>
+            <a class="dropdown-item" href="#">POLITICS</a>
+            <a class="dropdown-item" href="#">ENTERTAINMENT</a>
+            <a class="dropdown-item" href="#">SPORTS</a>
+            <a class="dropdown-item" href="#">GREEN</a>
+            <a class="dropdown-item" href="#">WELLNESS</a>
+            <!-- <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Separated link</a> -->
+        </div>
+    </div>
+    <!--End of Filter Button-->
+</template>
+
+<template name="sortByButton">
+    <div class="btn-group">
+        <button type="button" class="btn btn-success dropdown-toggle control-by-button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-filter" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+            </svg>&nbsp;&nbsp;&nbsp;&nbsp;Sort By
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Rising</a>
+            <a class="dropdown-item" href="#">Most Upvotes</a>
+            <a class="dropdown-item" href="#">Newest</a>
+            <!-- <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Separated link</a> -->
+        </div>
+    </div>
+</template>
+
+<template name="sortByButtonForAnswered">
+    <div class="btn-group">
+        <button type="button" class="btn btn-success dropdown-toggle control-by-button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-filter" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+            </svg>&nbsp;&nbsp;&nbsp;&nbsp;Sort By
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Newest</a>
+            <a class="dropdown-item" href="#">Most Upvotes</a>
+            <!-- <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Separated link</a> -->
+        </div>
+    </div>
+</template>
+
+<template name="questionListItemPolitician">
+    <div class="post-preview">
+
+        <div class="post-content">
+            <a href="#">
+                <h2 class="post-title">What is your stance on climate change?</h2>
+            </a>
+
+            <button type="button" class="btn btn-outline-light read-more-button" data-toggle="collapse"
+                href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Show
+                Description/Hide Description</button>
+
+            <div class="collapse" id="collapseExample">
+                <p class="post-meta">Most republicans don't believe in climate change. Yet, 98% of scientists say
+                    climate
+                    change
+                    is real. So what is your stance?</p>
+            </div>
+
+            <p class="tag-text">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-tag" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M2 2v4.586l7 7L13.586 9l-7-7H2zM1 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2z" />
+                    <path fill-rule="evenodd"
+                        d="M4.5 5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+                </svg>Tag: Climate Change</p>
+
+            <p class="post-meta">Posted by:&nbsp; niceguy666</p>
+
+            <h6>September 2, 2020</h6>
+        </div>
+
+        <div class="voting">
+            <h4 class="upvote-counter">550</h4>
+        </div>
+
+    </div>
+    <hr>
+</template>
+
+<template name="questionListItemUser">
+    <div class="post-preview">
+
+        <div class="post-content">
+            <h2 class="post-title" style="color: #fdcc52">What is your stance on climate change?</h2>
+
+            <button type="button" class="btn btn-outline-light read-more-button" data-toggle="collapse"
+                href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Show
+                Description/Hide Description</button>
+
+            <div class="collapse" id="collapseExample">
+                <p class="post-meta">Most republicans don't believe in climate change. Yet, 98% of scientists say
+                    climate
+                    change
+                    is real. So what is your stance?</p>
+            </div>
+
+            <p class="tag-text">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-tag" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M2 2v4.586l7 7L13.586 9l-7-7H2zM1 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2z" />
+                    <path fill-rule="evenodd"
+                        d="M4.5 5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+                </svg>Tag: Climate Change</p>
+
+            <p class="post-meta">Posted by:&nbsp; niceguy666</p>
+
+            <h6>September 2, 2020</h6>
+        </div>
+
+        <div class="voting">
+            <button type="button" class="btn btn-outline-primary upvote-button">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-up" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z">
+                    </path>
+                </svg>
+            </button>
+            <p class="upvote-counter">550</p>
+        </div>
+    </div>
+    <hr>
+</template>
+
+<template name="answeredListItem">
+    <div class="post-preview">
+
+        <div class="post-content">
+            <h2 class="post-title" style="color: #fdcc52">What is your stance on climate change?</h2>
+
+            <button type="button" class="btn btn-outline-light read-more-button" data-toggle="collapse"
+                href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Show
+                Description/Hide Description</button>
+
+            <button type="button" class="btn btn-outline-light read-more-button" data-toggle="collapse"
+                href="#collapseAnswer" role="button" aria-expanded="false" aria-controls="collapseExample">Show
+                Answer/Hide Answer</button>
+
+            <div class="collapse" id="collapseExample">
+                <p class="post-meta">Most republicans don't believe in climate change. Yet, 98% of scientists say
+                    climate
+                    change
+                    is real. So what is your stance?</p>
+            </div>
+
+            <div class="collapse" id="collapseAnswer">
+                <p class="post-meta">I should be back in school on the other side of the ocean. Yet you all come to us
+                    young people for hope. How dare you! You have stolen my dreams and my childhood with your empty
+                    words. All climate change should be banned.</p>
+            </div>
+
+            <p class="tag-text">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-tag" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M2 2v4.586l7 7L13.586 9l-7-7H2zM1 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2z" />
+                    <path fill-rule="evenodd"
+                        d="M4.5 5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+                </svg>Tag: Climate Change</p>
+
+            <p class="post-meta">Posted by:&nbsp; niceguy666</p>
+
+            <h6>September 2, 2020</h6>
+        </div>
+
+        <div class="voting">
+            <h4 class="upvote-counter">550</h4>
+        </div>
+    </div>
+    <hr>
+</template>

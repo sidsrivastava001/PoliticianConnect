@@ -1,0 +1,3 @@
+meteor add http
+meteor add useraccounts
+meteor add session

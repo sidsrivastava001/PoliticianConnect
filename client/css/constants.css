@@ -1,0 +1,67 @@
+.nav.navbar-nav.ml-auto {
+  font-size: 200%;
+}
+
+#mainNav .navbar-nav > li > a, #mainNav .navbar-nav > li > a:focus {
+  font-size: large;
+  margin-left: 50px;
+  font-family: cursive;
+  text-transform: initial;
+}
+
+#mainNav .name-display {
+  font-size: 200%;
+  /*font-family: Roboto,arial,sans-serif;*/
+  font-family: cursive;
+  font-weight: 600;
+  /*font-style: italic;*/
+  color: #ffa33a;
+}
+
+#mainNav {
+  max-width: 100vw;
+  /*background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);*/
+  /*background: linear-gradient(-80deg, #12c2e9, #c471ed, #f64f59);*/
+  opacity: 0.80;
+  height: 10%;
+  background: rgb(52,6,52);
+}
+
+#mainNav .navbar-brand {
+  /*font-size: 200%;*/
+  font-family: Catamaran, sans-serif;
+  font-style: normal;
+}
+
+.nav.navbar-nav.ml-auto {
+  width: 853px;
+}
+
+#mainNav .navbar-nav > li > a, #mainNav .navbar-nav > li > a:focus {
+  font-family: Catamaran, sans-serif;
+}
+
+header.masthead {
+  /*background: url('../../assets/img/bg-pattern.png'), linear-gradient(to left, #7b4397, #dc2430);*/
+  background: url('public/images/bg-pattern.png'), linear-gradient(to left, #3e008c, #7a1093);
+  min-height: 92.5%;
+  height: auto;
+}
+
+.nav-item.dropdown {
+  padding-left: 0px;
+  margin-left: 75px;
+}
+
+.navbar-expand-lg .navbar-nav .dropdown-menu {
+  text-align: center;
+  margin-left: 10px;
+}
+
+.first{
+  margin-top: 12%;
+}
+
+.last{
+  margin-bottom: 8%;
+}

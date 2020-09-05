@@ -1,0 +1,61 @@
+<!--Navbar-->
+<template name="navbar">
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="mainNav">
+      <div class="container" style="/*margin-right: 0;*/"><a class="navbar-brand d-inline-flex js-scroll-trigger name-display" href="#page-top">PoliticianConnect</a><button data-toggle="collapse" data-target="#navbarResponsive" class="navbar-toggler float-right" aria-controls="navbarResponsive" aria-expanded="false"
+              aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+          <ul class="nav navbar-nav ml-auto">
+              <li class="nav-item" role="presentation"><a class="nav-link active d-inline-flex" href="#" style="font-family: Catamaran, sans-serif;">Home</a></li>
+              <li class="nav-item" role="presentation"><a class="nav-link d-inline-flex js-scroll-trigger" href="#questions">Questions</a></li>
+              <li class="nav-item" role="presentation"><a class="nav-link d-inline-flex js-scroll-trigger" href="#download">Answered</a></li>
+              <li class="nav-item" role="presentation"><a class="nav-link d-inline-flex js-scroll-trigger" href="#features">Ranks</a></li>
+              <!-- <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(255,255,255);font-size: 26px;margin-left: 0px;">Cory Booker</a>
+                  <div class="dropdown-menu flex-column" role="menu"><a class="dropdown-item" role="presentation" href="#">Profile</a><a class="dropdown-item" role="presentation" href="#" style="color: rgb(248,67,67);">Sign Out</a></div>
+              </li> -->
+          </ul>
+          <!-- <div class="collapse navbar-collapse" id="navbarResponsive"></div> -->
+          {{> profileDropdown}}
+      </div>
+  </nav>
+  </template>
+  
+    <!-- I swear Bootstrap menu's are broken. Had to manually implement it. -->
+  <template name = "profileDropdown">
+    <div style = "position:relative">
+        {{#if loggedIn}}
+        <a class="dropdown-toggle nav-link" href="#" style="color: rgb(255,255,255);font-size: 26px;margin-left: 0px;">{{getName}}</a>
+    {{#if showProfileMenu}}
+    <div class="my-dropdown-menu">
+    <a class="dropdown-item" role="presentation" href="#">Profile</a>
+    <a class="dropdown-item sign-out" role="presentation" href="#" style="color: rgb(248,67,67);">Sign Out</a>
+    </div>
+    {{/if}}
+    {{else}}
+  <a style="color: rgb(255,255,255);font-size: 26px;margin-left: 0px;white-space:nowrap">Not Logged In</a>
+{{/if}}
+  </div>
+  </template>
+  
+  <template name = "signUpConfig">
+    {{#if showPoliticianSignUp}}
+      <h1 class="text-left mb-5" style="font-size: 70px;"><strong>Representative</strong></h1>
+      <h3 style="margin-bottom: 20px;padding-right: 105px;"><em>Easily answer the questions of your constituents.</em></h3>
+    {{else}}
+      <h1 class="text-left mb-5" style="font-size: 70px;"><strong>Constituent</strong></h1>
+      <h3 style="margin-bottom: 20px;padding-right: 105px;"><em>Ask questions to your representatives, and get answers in a convenient way!</em></h3>
+    {{/if}}
+    <h6> Not a {{textValue}}? <a class = "sign-up-switch" style = "color: #fdcc52">Switch</a> </h6>
+  </template> 
+
+  <!-- Footer page -->
+  <template name="footer">
+    <footer style="height: 7.5%;">
+      <div class="container">
+        <p class="text-center">©&nbsp;PoliticianConnect 2020. All Rights Reserved.</p>
+          <ul class="list-inline">
+              <li class="list-inline-item"><a href="#">Privacy</a></li>
+              <li class="list-inline-item"><a href="#">Terms</a></li>
+              <li class="list-inline-item"><a href="#">FAQ</a></li>
+          </ul>
+      </div>
+  </footer>
+  </template>
