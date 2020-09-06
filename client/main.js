@@ -7,17 +7,81 @@ import { HTTP } from 'meteor/http';
 import './main.html';
 import './constants.html';
 import './questions.html';
+import './ranks.html';
 
 import "./questions.js"
+import "./ranks.js"
 
 Session.setDefault("showProfileDropdown", false);
 
 //Show constituent signup by default
 Session.setDefault("showPoliticianSignUp", false);
 
+Session.set("page", "Home");
 
 
-
+Template.navbar.events({
+  "click #x": function(event) {
+    event.preventDefault();
+    console.log(event.target.text);
+    console.log("Pressed");
+    if(event.target.text == "Questions") {
+      if(Meteor.user().profile.role == "representative") {
+        Session.set("page", "questionsPolitician");
+      }
+      else {
+        Session.set("page", "questionsUser");
+      }
+    }
+    if(event.target.text == "Home") {
+      Session.set("page", "Home")
+    }
+    if(event.target.text == "Answered") {
+      Session.set("page", "answered")
+    }
+    if(event.target.text == "Ranks") {
+      Session.set("page", "Ranks")
+    }
+    //console.log(Session.get("page"));
+  }
+})
+Template.body.helpers({
+  questionsPol() {
+    if(Session.get("page") == "questionsPolitician") {
+      console.log(Session.get("page"));
+      return true;
+    }
+    return false;
+  },
+  questionsUse() {
+    if(Session.get("page") == "questionsUser") {
+      console.log(Session.get("page"));
+      return true;
+    }
+    return false;
+  },
+  answer() {
+    if(Session.get("page") == "answered") {
+      console.log(Session.get("page"));
+      return true;
+    }
+    return false;
+  },
+  homeRet() {
+    if(Session.get("page") == "Home") {
+      console.log(Session.get("page"));
+      return true;
+    }
+    return false;
+  },
+  ranksRet() {
+    if(Session.get("page") == "Ranks") {
+      console.log(Session.get("page"));
+      return true;
+    }
+    return false;
+  }
+})
 
 Template.home.helpers({
   signingUp: function() {
@@ -27,6 +91,15 @@ Template.home.helpers({
   loggedIn: function() {
     return Meteor.user() != null ? true : false;
   },
+  getUser: function(){
+    return Meteor.user().profile;
+  },
+  getName: function() {
+    return Meteor.user().profile.name;
+  },
+  isPolitician: function() {
+    return Meteor.user().profile.role == "representative";
+  }
 });
 
 Template.profileDropdown.events({
@@ -74,6 +147,7 @@ AccountsTemplates.configure({
     if(Session.get("showPoliticianSignUp")) {
 
       info.profile.role = "representative";
+      info.profile.replyCount = 0;
     } else {
       info.profile.role = "constituent";
     }

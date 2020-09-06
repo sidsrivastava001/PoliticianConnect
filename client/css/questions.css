@@ -124,3 +124,9 @@
   border: 0;
   margin-bottom: auto;
 }
+
+.answer-title{
+  margin-bottom: 0.65em;
+  color:rgb(29, 161, 242);
+  font-weight: 600;
+}

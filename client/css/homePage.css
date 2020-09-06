@@ -2,3 +2,8 @@
     text-decoration: underline;
     cursor: pointer;
 }
+
+.representatives-display-group{
+    margin-left: 5%;
+    margin-top: 3%;
+}

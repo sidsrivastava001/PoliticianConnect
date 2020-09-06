@@ -27,6 +27,7 @@
                 <!--Blog: -->
                 {{displayPosts}}
                 {{#each returnPosts}}
+                {{setPost this.heading}}
                 <div class="post-preview">
 
                     <div class="post-content">
@@ -59,12 +60,12 @@
                     <div class="voting">
                         <h4 class="upvote-counter">{{this.stars}}</h4>
                     </div>
-                    <button type="button" id = "{{this.username}}" class="btn btn-primary btn-lg btn-block ask-a-question-button" data-toggle="collapse"
-                    data-target="#{{this.body}}" role="button" aria-expanded="false" aria-controls="collapseExample">Reply to this question</button>
-                    <div class="collapse" id="{{this.body}}">
+                    <button type="button" href="#reply{{@index}}" id = "{{this.username}}" class="btn btn-primary btn-lg btn-block ask-a-question-button" data-toggle="collapse"
+                     role="button" aria-expanded="false" aria-controls="reply{{@index}}">Reply to this question</button>
+                    <div class="collapse" id="reply{{@index}}">
                         <div class="container text-center text-sm-center text-md-center text-lg-center text-xl-center d-flex h-100" style="/*margin-left: 15%;*//*margin-right: 15%;*/max-width: 100wh;">
                             <div class="col-lg-8 offset-lg-11 my-auto" style="margin: auto;">
-                                <h1 style="text-align: center;">Answer this question</h1>
+                                <!-- <h1 style="text-align: center;">Answer this question</h1> -->
                                 <form>
                                     <div class="form-group" style="padding: 0px;">
                                         <!-- <select class="form-control"><optgroup label="This is a group">
@@ -72,10 +73,10 @@
                                             <option value="13">This is item 2</option>
                                             <option value="14">This is item 3</option></optgroup>
                                         </select> -->
-                                        <textarea placeholder="Question Description" class="form-control question-form" id="exampleFormControlTextarea1" rows="3"></textarea>
                                         
                                         <div style="text-align: center;">
                                             <input type="file" class="custom-file-input" id="customFile">
+                                            <textarea placeholder="Your Typed Response" class="form-control question-form" id="exampleFormControlTextarea1" rows="3" ></textarea>
                                             <label class="custom-file-label" for="customFile">Choose file</label>
                                             <button name = "{{this.body}}" class="btn btn-primary question-form-submit" type="submit" style="width: 100%;">SUBMIT</button>
                                         </div>
@@ -103,23 +104,29 @@
             <div class="jumbotron jumbotron-fluid first your-questions">
                 <div class="container">
                     <div style="margin-left: 3%;">
-                        <h1 class="display-4">Questions for Cory Booker</h1>
+                        {{#if politicianSelected}}
+                        <h1 class="display-4">Questions for {{getCurrentPoliticianName}}</h1>
+                        {{else}}
+                        <h1 class="display-4">Select a Politician</h1>
+                        {{/if}}
                         <p class="lead" style="margin-top: 1em;">The number bolded on the right of each post is the
                             number of upvotes for that question. Click the arrow to upvote a question.</p>
                         <p class="lead">Click "Show Description" to see the description of the question</p>
                     </div>
                 </div>
             </div>
+            {{#if politicianSelected}}
             <!--End of Heading-->
             <button type="button" class="btn btn-primary btn-lg btn-block ask-a-question-button" data-toggle="collapse"
                 href="#ask-a-question-form" role="button" aria-expanded="false" aria-controls="collapseExample">Ask a
                 question</button>
 
             <!--PUT YOUR POST FORM CODER HERE-->
+            
             <div class="collapse" id="ask-a-question-form">
                     <div class="container text-center text-sm-center text-md-center text-lg-center text-xl-center d-flex h-100" style="/*margin-left: 15%;*//*margin-right: 15%;*/max-width: 100wh;">
                         <div class="col-lg-8 offset-lg-11 my-auto" style="margin: auto;">
-                            <h1 style="text-align: center;">Submit a new question for Cory Booker</h1>
+                            <h1 style="text-align: center;">Submit a new question for {{getCurrentPoliticianName}}</h1>
                             <form>
                                 <div class="form-group" style="padding: 0px;">
                                     <!-- <select class="form-control"><optgroup label="This is a group">
@@ -135,6 +142,7 @@
                         </div>
                     </div>
             </div>
+            {{/if}}
 
             <div class="button-grouper">
                 {{> polticianButton}}
@@ -205,7 +213,11 @@
             <div class="jumbotron jumbotron-fluid first your-answered">
                 <div class="container">
                     <div style="margin-left: 3%;">
+                        {{#if isPolitician}}
+                        <h1 class="display-4">Your Answers</h1>
+                        {{else}}
                         <h1 class="display-4">Answers</h1>
+                        {{/if}}
                         <p class="lead" style="margin-top: 1em;">The number bolded on the right of each post is the
                             number of upvotes for that question before it was answered</p>
                         <p class="lead">Click "Show Description" to see the description of the question</p>
@@ -215,7 +227,11 @@
             </div>
             <!--End of Heading-->
             <div class="button-grouper">
-                {{> polticianButton}}
+                {{#if isPolitician}}
+                <!--Nothing-->
+                {{else}}
+                    {{> polticianButton}}
+                {{/if}}
                 {{> sortByButtonForAnswered}}
                 {{> filterButton}}
             </div>
@@ -240,9 +256,17 @@
                         <div class="collapse" id="collapseExample">
                             <p class="post-meta">{{this.body}}</p>
                         </div>
-            
+                        <!--{{getURL}}-->
                         <div class="collapse" id="answer{{@index}}">
+                            <h4 class="answer-title">Answer</h4>
                             <p class="post-meta">{{this.answer}}</p>
+                            {{setURL}}
+                            <!-- <video width="480" height="360" controls>
+                                <source src="{{getURL}}" type="video/mp4">
+                              </video> -->
+                        <iframe width="560" height="315" src="https://storage.cloud.google.com/tom-malinowski/malinowski2020.mp4" frameborder="0" allowfullscreen></iframe>
+                        <!-- <h5 class="post-meta"><a href="{{getURL}}" target="_blank">Link to video response</a></h5> -->
+
                         </div>
             
                         <p class="tag-text">
@@ -253,8 +277,10 @@
                                 <path fill-rule="evenodd"
                                     d="M4.5 5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
                             </svg>Tag: {{this.tag}}</p>
+                            
             
                         <p class="post-meta">Posted by:&nbsp; {{this.username}}</p>
+                        
             
                         <h6>{{this.date}}</h6>
                     </div>

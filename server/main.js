@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Posts } from '../imports/posts.js';
 import { HTTP } from 'meteor/http';
 const { Storage } = require('@google-cloud/storage');
+const fs = require('fs');
 Meteor.startup(() => {
   // code to run on server at startup
 });
@@ -20,7 +21,7 @@ Accounts.onCreateUser((options, user) => {
 });
 
 const storage = new Storage({
-  keyFilename: "C:\Users\sidsr\Downloads\key.json",
+  keyFilename: "/home/victor/Documents/Meteor/PoliticianConnect/server/key.json",
   projectId: "politicianconnector"});
 
 Meteor.startup(() => {
@@ -98,13 +99,44 @@ Meteor.methods({
     
     return arr;
   },
-  async getVideo(politician, postHeader){
+  async fileupload(fileInfo, fileData, politician){
+    var rep = politician.toLowerCase();
+    rep = rep.split(' ').join('-');
+    const [buckets] = await storage.getBuckets();
+    var contains = false;
+    var array = []
+    buckets.forEach(bucket => {
+      if(bucket.name == rep){
+        contains = true;
+      }
+      array.push(bucket.name);
+    });
+    if(!contains){
+      await storage.createBucket(rep);
+    }
+
+    console.log(fileInfo);
+    console.log("TESTING THE NAME");
+    console.log(fileInfo.name);
+    fs.writeFile('tom.mp4', new Buffer(fileData, 'binary'), (err, res) => {
+      console.log('CALLBACK WORKED');
+      
+    });
+    await storage.bucket(rep).upload('tom.mp4', {
+      resumable: false, //set to true when uploading videos
+      gzip:true,
+      destination:'malinowski2020.mp4'
+    });
+  },
+  async getVideo(politician){
+    var rep = politician.toLowerCase();
+    rep = rep.split(' ').join('-');
     const options = {
       version: 'v4',
       action: 'read',
-      expires: Date.now() + 60 * 60 * 1000
+      expires: Date.now() + 600 * 60 * 1000
     };
-    const [url] = await storage.bucket(politician).file(postHeader).getSignedUrl(options);
+    const [url] = await storage.bucket(rep).file('malinowski2020.mp4').getSignedUrl(options);
     return url;
   },
   async uploadVideo(politician, postHeader, filepath){

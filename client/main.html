@@ -18,10 +18,24 @@
 <body>
   {{>navbar}}
   <header class="masthead">
-    {{>home}}
-    {{>questionsPolitician}}
-    <!--{{>questionsUser}}-->
-    {{> answered}}
+    {{#if homeRet}}
+      {{>home}}
+    {{/if}}
+    <!-- {{#if homeRetPoltician}}
+      {{>homePolitician}}
+    {{/if}} -->
+    {{#if questionsPol}}
+      {{>questionsPolitician}}
+    {{/if}}
+    {{#if questionsUse}}
+      {{>questionsUser}}
+    {{/if}}
+    {{#if answer}}
+      {{>answered}}
+    {{/if}}
+    {{#if ranksRet}}
+      {{> ranks}}
+    {{/if}}
   </header>
   {{>footer}}
   <script src="assets/js/jquery.min.js"></script>
@@ -48,19 +62,71 @@
       <div class="jumbotron jumbotron-fluid first your-answered">
         <div class="container">
           <div style="margin-left: 3%;">
-            <!-- Governor Representative Senator1 Senator2-->
+            {{#if isPolitician}}
+            <h1 class="display-4">Welcome {{getName}}!</h1>
+            {{else}}
             <h1 class="display-4">Your Representatives</h1>
-            <div style="margin-left: 5%; margin-top: 3%;">
+            <div class="representatives-display-group">
               <div style="width: 100%;">
                 <h1 style="text-align: left; display: inline-block">Phil Murphy</h1>
-                <h1 style="text-align: right; width:65%; display: inline-block">State Governor</h1>
+                <h1 style="text-align: right; width:65%; display: inline-block">Governor</h1>
+                <h1 style="text-align: left; display: inline-block">{{getUser.senator1}}</h1>
+                <h1 style="text-align: right; width:65%; display: inline-block">Senator</h1>
+                <h1 style="text-align: left; display: inline-block">{{getUser.senator2}}</h1>
+                <h1 style="text-align: right; width:65%; display: inline-block">Senator</h1>
+                <h1 style="text-align: left; display: inline-block">{{getUser.representative}}</h1>
+                <h1 style="text-align: right; width:65%; display: inline-block">Representative</h1>
               </div>
-              <h1>Tom Malinowsky Representative</h1>
-              <h1>Cory Booker Senator</h1>
-              <h1>Robert Menendez Senator:</h1>
+              
             </div>
+            {{/if}}
+            <!-- Governor Representative Senator1 Senator2-->
+            
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  <div class="container text-center text-sm-center text-md-center text-lg-center text-xl-center d-flex h-100"
+    style="/*margin-left: 15%;*//*margin-right: 15%;*/max-width: 100wh;">
+    <div class="row text-center h-100" style="margin-top: 20%;">
+      <div class="col-auto col-lg-7 col-xl-6 my-auto"
+        style="width: 664px;min-height: 524px;height: auto;text-align: left;">
+        <div class="text-left mx-auto header-content" style="margin-top: 15%;">
+          {{#if signingUp}}
+          {{> signUpConfig}}
+          {{else}}
+          <h1 class="text-left mb-5" style="font-size: 70px;"><strong>PoliticianConnect</strong></h1>
+          <h3 style="margin-bottom: 78px;padding-right: 105px;"><em>Improving communication between politicians and
+              their constituents.&nbsp;</em></h3>
+          {{/if}}
+        </div>
+      </div>
+      <div class="col-auto col-lg-7 col-xl-6 my-auto"
+        style="width: 664px;min-height: 524px;height: auto;text-align: left;">
+        <!-- <h1 class="text-center" style="margin-top: 10%;color: rgb(55,3,64);font-weight: 700;font-size: 60px;">Sign Up</h1> -->
+        {{> atForm}}
+        <div class="text-left mx-auto header-content" style="margin-top: 10%;"></div>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+</template>
+
+<!-- Home page content -->
+<template name="homePolitician">
+  {{#if loggedIn}}
+  <div class="container">
+    <div class="row">
+      <div class="jumbotron">
+        <h1 class="display-4">Hello, world!</h1>
+        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+        <hr class="my-4">
+        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <p class="lead">
+          <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </p>
       </div>
     </div>
   </div>

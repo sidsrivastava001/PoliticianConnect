@@ -1,0 +1,57 @@
+.ranks {
+  /* background: rgb(253, 82.5, 40); */
+  background: rgb(221, 109, 5);
+
+  /* background: linear-gradient(
+    286deg,
+    rgba(253, 29, 29, 1) 0%,
+    rgba(252, 136, 69, 1) 100%
+  ); */
+}
+
+.rank-display {
+  width: 6%;
+  padding-right: 15px;
+  text-align: center;
+  display: inline-block;
+  position: absolute;
+  font-weight: 800;
+  font-size: 2.5em;
+}
+
+.answers-display {
+  width: 6%;
+  text-align: center;
+  display: inline-block;
+  color: rgba(253, 29, 29, 1);
+}
+
+.poltician-title {
+  font-weight: 500;
+}
+
+.party-title {
+  margin-top: -0.5em;
+  margin-bottom: 1em;
+  font-weight: 400;
+}
+
+.social-media-group {
+  margin-top: 1.5em;
+  margin-bottom: 0.25em;
+}
+
+.twitter-group {
+  margin-right: 2em;
+}
+
+.twitter-title {
+  color: rgb(29, 161, 242);
+  font-weight: 600;
+}
+
+.fb-title {
+  color: rgb(66, 103, 178);
+  font-weight: 600;
+  /* color: rgb(29, 161, 242); */
+}

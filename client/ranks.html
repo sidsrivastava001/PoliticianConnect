@@ -1,0 +1,98 @@
+<template name="ranks">
+    <div class="container">
+        <div class="row">
+            <div class="jumbotron jumbotron-fluid first your-questions ranks">
+                <div class="container">
+                    <div style="margin-left: 3%;">
+                        <h1 class="display-4">Ranks</h1>
+                        <!-- <ul>
+                            <li class="lead" style="margin-top: 1em; list-style-type:circle;">The number bolded on the
+                                right of each post is the
+                                number of upvotes for that question</li>
+                            <li class="lead" style=" display: list-item">Click "Show Description" to see the description
+                                of the question</li>
+                            <li class="lead" style="display: list-item">Click on the question title to reply to the
+                                question</li>
+                        </ul> -->
+                        <p class="lead" style="margin-top: 1em;">Below is a ranked list of the polticians who answered
+                            the most questions this week. </p>
+                        <ul>
+                            <li class="lead" style=" display: list-item; margin-top: 1em;">The number on the top right
+                                is the their rank.
+                            </li>
+                            <li class="lead" style=" display: list-item; margin-top: 1em;">The number on the bottom
+                                right is the number of
+                                questions that
+                                politician has answered this week.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--End of Heading-->
+            
+            <!--<div class="button-grouper">
+                {{> rankByButton}}
+            </div>-->
+            <!--Adding the filter button-->
+            <div class="lister">
+                <!--Blog: -->
+                {{#each retUsers}}
+                <div class="post-preview">
+
+                    <div class="post-content">
+                        <h1 class="post-title poltician-title" style="color: #fdcc52">{{this.profile.name}}</h1>
+                        <h4 class="address">{{this.profile.address}}</h4>
+                        
+                        <!-- <h5 class="post-meta"><a href="https://www.booker.senate.gov/" target="_blank">Website:
+                                https://www.booker.senate.gov/</a></h5> -->
+                       <div class="social-media-group">
+                            <span class="twitter-group">
+                                <a href="https://twitter.com/CoryBooker" target="_blank" class="twitter-title"><i
+                                        class="fa fa-twitter twitter-title"></i>
+                                    Twitter</a></span>
+                            <a href="https://twitter.com/CoryBooker" target="_blank" class="fb-title"><i
+                                    class="fa fa-facebook fb-title"></i>
+                                Facebook</a>
+                        </div>
+                    </div>
+            
+                    <h3 class="rank-display">{{this.place}}</h3>
+                    <div class="answers-display">
+                        <h3 class="upvote-counter"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-reply-fill"
+                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M9.079 11.9l4.568-3.281a.719.719 0 0 0 0-1.238L9.079 4.1A.716.716 0 0 0 8 4.719V6c-1.5 0-6 0-7 8 2.5-4.5 7-4 7-4v1.281c0 .56.606.898 1.079.62z" />
+                            </svg>{{this.profile.replyCount}}</h3>
+                    </div>
+                </div>
+                <hr>
+                {{/each}}
+                <!--End of Blog-->
+                <br />
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="rankByButton">
+    <div class="btn-group">
+        <button type="button" class="btn btn-danger dropdown-toggle control-by-button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart-line-fill" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z" />
+            </svg>&nbsp;&nbsp;&nbsp;&nbsp;Politician Level
+        </button>
+        <!-- <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Representatives</a>
+            <a class="dropdown-item" href="#">Senators</a>
+            <a class="dropdown-item" href="#">Governors</a>
+        </div> -->
+    </div>
+</template>
+
+<template name="rankListItem">
+    
+</template>
