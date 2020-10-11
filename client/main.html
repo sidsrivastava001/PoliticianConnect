@@ -59,29 +59,53 @@
   {{#if loggedIn}}
   <div class="container">
     <div class="row">
-      <div class="jumbotron jumbotron-fluid first your-answered">
+      <div class="jumbotron jumbotron-fluid first your-representatives">
         <div class="container">
           <div style="margin-left: 3%;">
             {{#if isPolitician}}
             <h1 class="display-4">Welcome {{getName}}!</h1>
             {{else}}
-            <h1 class="display-4">Your Representatives</h1>
+            <h1 class="display-4" style="margin-bottom: 6%;">Your Representatives</h1>
             <div class="representatives-display-group">
-              <div style="width: 100%;">
-                <h1 style="text-align: left; display: inline-block">Phil Murphy</h1>
-                <h1 style="text-align: right; width:65%; display: inline-block">Governor</h1>
-                <h1 style="text-align: left; display: inline-block">{{getUser.senator1}}</h1>
-                <h1 style="text-align: right; width:65%; display: inline-block">Senator</h1>
-                <h1 style="text-align: left; display: inline-block">{{getUser.senator2}}</h1>
-                <h1 style="text-align: right; width:65%; display: inline-block">Senator</h1>
-                <h1 style="text-align: left; display: inline-block">{{getUser.representative}}</h1>
-                <h1 style="text-align: right; width:65%; display: inline-block">Representative</h1>
-              </div>
-              
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Position</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Twitter</th>
+                    <th scope="col">Facebook</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Governor</th>
+                    <td>{{getUser.governor}}</td>
+                    <td>@MarkTwitter</td>
+                    <td>@MarkFacebook</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Senator 1</th>
+                    <td>{{getUser.senator1}}</td>
+                    <td>@MarkTwitter</td>
+                    <td>@MarkFacebook</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Senator 2</th>
+                    <td>{{getUser.senator2}}</td>
+                    <td>@MarkTwitter</td>
+                    <td>@MarkFacebook</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Local US Representative</th>
+                    <td>{{getUser.representative}}</td>
+                    <td>@MarkTwitter</td>
+                    <td>@MarkFacebook</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             {{/if}}
             <!-- Governor Representative Senator1 Senator2-->
-            
           </div>
         </div>
       </div>

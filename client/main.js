@@ -12,6 +12,14 @@ import './ranks.html';
 import "./questions.js"
 import "./ranks.js"
 
+const states = require("./stateCodes.json");
+const stateAbbrev = states.map(function(state) {
+  var obj = {};
+  obj['text'] = state.Code;
+  obj['value'] = state.Code;
+  return obj;
+});
+
 Session.setDefault("showProfileDropdown", false);
 
 //Show constituent signup by default
@@ -164,11 +172,33 @@ AccountsTemplates.addFields([
     displayName: "Name",
     required: true,
   },
-  {
+  /*{
     _id: "home_address",
     type: "text",
     placeholder: "Home Address",
     displayName: "Home Address",
+    required: true,
+  },*/
+  {
+    _id: "address",
+    type: "text",
+    placeholder: "Address",
+    displayName: "Address",
+    required: true,
+  },
+  {
+    _id: "city",
+    type: "text",
+    placeholder: "City",
+    displayName: "City",
+    required: true,
+  },
+  {
+    _id: "state",
+    type: "select",
+    select: stateAbbrev,
+    placeholder: "State",
+    displayName: "State",
     required: true,
   },
 ]);

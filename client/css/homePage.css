@@ -1,9 +1,13 @@
+.your-representatives {
+    background: #6cb8bb;
+    width: 100%;
+  }
+
 .sign-up-switch:hover:hover {
     text-decoration: underline;
     cursor: pointer;
 }
 
 .representatives-display-group{
-    margin-left: 5%;
-    margin-top: 3%;
+    margin: auto;
 }

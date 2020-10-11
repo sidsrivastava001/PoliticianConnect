@@ -179,7 +179,7 @@ Meteor.methods({
     return x;
   },
   showingPosts(politician, sortBy){
-    var x = Posts.find({politician:politician}).fetch();
+    var x = Posts.find({politician:politician, answered:false}).fetch();
     console.log(x);
     var finalArr = [];
     if(sortBy == "Newest") {
@@ -219,7 +219,7 @@ Meteor.methods({
     Posts.upsert(x, {username:x.username, stars:(x.stars+1), body:body, heading:x.heading, date:x.date, politician:politician, tag:x.tag, answerVid: x.answerVid, answered: x.answered, answer:x.answer});
   },
   filter(tag, politician) {
-    var x = Posts.find({politician:politician, tag:tag}).fetch();
+    var x = Posts.find({politician:politician, tag:tag, answered:false}).fetch();
     return x;
   }
 });

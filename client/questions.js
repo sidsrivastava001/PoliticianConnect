@@ -197,18 +197,43 @@ Template.questionsUser.events({
     },
     "click #hello"(event) {
         event.preventDefault();
+        console.log("Upvoted");
         var vote = event.target.name;
         console.log(vote);
         Meteor.call('upvoted', Session.get('politician'), vote, 
         (err, res) => {
             console.log('done');
         })
+        if(Session.get('Filter tag') == 'None') {
+            Meteor.call('showingPosts', Session.get('politician'), Session.get('Sort'),
+                (err, res) => {
+                    if(err) {
+                        console.log("Err");
+                    }
+                    else {
+                        Session.set('post', res);
+                    }
+                    
+                })
+            }
+            else{
+                Meteor.call('filter', Session.get('Filter tag'), Session.get('politician'),
+                (err, res) => {
+                    if(err) {
+                        console.log("Err");
+                    }
+                    else {
+                        Session.set('post', res);
+                    }
+                })
+            }
     }
     
 })
 
 Template.answered.helpers({
     displayPosts: function() {
+        
         Meteor.call('answeredPosts', Session.get('politician'),
         (err, res) => {
             if(err) {

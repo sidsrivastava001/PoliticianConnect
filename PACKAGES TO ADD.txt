@@ -1,3 +1,4 @@
 meteor add http
-meteor add useraccounts
+meteor add useraccounts:bootstrap
 meteor add session
+meteor add accounts-password
