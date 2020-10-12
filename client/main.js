@@ -158,6 +158,7 @@ AccountsTemplates.configure({
       info.profile.replyCount = 0;
     } else {
       info.profile.role = "constituent";
+      info.profile.upvotedPosts = [];
     }
     
   }

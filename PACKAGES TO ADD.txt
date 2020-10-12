@@ -2,3 +2,12 @@ meteor add http
 meteor add useraccounts:bootstrap
 meteor add session
 meteor add accounts-password
+meteor add juliancwirko:s-alert
+meteor add juliancwirko:s-alert-scale
+meteor add juliancwirko:s-alert-slide
+meteor add juliancwirko:s-alert-genie
+meteor add juliancwirko:s-alert-jelly
+meteor add juliancwirko:s-alert-flip
+meteor add juliancwirko:s-alert-bouncyflip
+meteor add juliancwirko:s-alert-stackslide
+meteor add fortawesome:fontawesome@=4.7.0

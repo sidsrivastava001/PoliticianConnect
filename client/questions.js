@@ -76,6 +76,8 @@ Template.questionsPolitician.helpers({
 
 Template.questionsPolitician.events({
     'submit form': function(event) {
+        alert("Thanks for answering a question!");
+
         event.preventDefault();  
         
         //Increase reply count by 1
@@ -159,6 +161,7 @@ Template.questionsUser.helpers({
 
 Template.questionsUser.events({
     "submit form": function(event) {
+        alert("Thanks for submitting a question!");
         event.preventDefault();
         x = event.target.getElementsByTagName("input")[0].value;
         y = event.target.getElementsByTagName("textarea")[0].value;
@@ -199,11 +202,18 @@ Template.questionsUser.events({
         event.preventDefault();
         console.log("Upvoted");
         var vote = event.target.name;
+        console.log(event.target);
         console.log(vote);
         Meteor.call('upvoted', Session.get('politician'), vote, 
         (err, res) => {
-            console.log('done');
-        })
+            
+            if(err) console.log("err");
+            else {
+
+             console.log('done');
+
+            }
+        });
         if(Session.get('Filter tag') == 'None') {
             Meteor.call('showingPosts', Session.get('politician'), Session.get('Sort'),
                 (err, res) => {
@@ -211,6 +221,7 @@ Template.questionsUser.events({
                         console.log("Err");
                     }
                     else {
+                        
                         Session.set('post', res);
                     }
                     

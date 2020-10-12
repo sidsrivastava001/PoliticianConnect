@@ -10,18 +10,45 @@ Meteor.startup(() => {
 Accounts.onCreateUser((options, user) => {
   console.log(options);
   //var reps = {};
-  
-  options.profile.governor = Meteor.call('getGovernor', options.profile.home_address)[0];
-  options.profile.representative = Meteor.call('getLocalPolitician', options.profile.home_address)[0];
-  options.profile.senator1 = Meteor.call('getStatePolitician', options.profile.home_address)[0][0];
-  options.profile.senator2 = Meteor.call('getStatePolitician', options.profile.home_address)[1][0];
+  var home_address = options.profile.address + " " + options.profile.city + " " + options.profile.state;
+  console.log(home_address);
+  var gov = Meteor.call('getGovernor', home_address);
+  options.profile.governor = gov[0];
+  options.profile.governorParty = gov[1];
+  options.profile.governorURL = gov[2];
+  options.profile.governorFacebook = gov[3];
+  options.profile.governorTwitter = gov[4];
+
+  var localPolitician = Meteor.call('getLocalPolitician', home_address);
+  options.profile.representative = localPolitician[0];
+  options.profile.representativeParty = localPolitician[1];
+  options.profile.representativeURL = localPolitician[2];
+  options.profile.representativeFacebook = localPolitician[3];
+  options.profile.representativeTwitter = localPolitician[4];
+
+
+  var senator1 = Meteor.call('getStatePolitician',home_address)[0];
+  options.profile.senator1 = senator1[0];
+  options.profile.senator1Party = senator1[1];
+  options.profile.senator1URL = senator1[2];
+  options.profile.senator1Facebook = senator1[3];
+  options.profile.senator1Twitter = senator1[4];
+
+  var senator2 = Meteor.call('getStatePolitician', home_address)[1];
+  options.profile.senator2 = senator2[0];
+  options.profile.senator2Party = senator2[1];
+  options.profile.senator2URL = senator2[2];
+  options.profile.senator2Facebook = senator2[3];
+  options.profile.senator2Twitter = senator2[4];
+
+
   user.profile = options.profile;
   console.log(user);
   return user;
 });
 
 const storage = new Storage({
-  keyFilename: "/home/victor/Documents/Meteor/PoliticianConnect/server/key.json",
+  keyFilename: "C:\MyProjects\KEYS\key.json",
   projectId: "politicianconnector"});
 
 Meteor.startup(() => {
@@ -55,17 +82,30 @@ Meteor.methods({
     return tag;
   },
   getLocalPolitician(address){
-    var add = address.replace(" ", "%20")
+    var add = address.replace(" ", "%20");
     var x = HTTP.call('GET', 'https://civicinfo.googleapis.com/civicinfo/v2/representatives?address='+ add + '&levels=country&roles=legislatorLowerBody&key=AIzaSyDB5e9LPNi72wi_R7wqCw6VFmloaQZ0jmM');
     var y = x.data['officials'];
     var arr = [];
 
-      arr.push(y[0]['name']);
-      arr.push(y[0]['party']);
-      arr.push(y[0]['urls'][0]);
+    arr.push(y[0]['name']);
+    arr.push(y[0]['party']);
+    arr.push(y[0]['urls'][0]);
+
+    var socialMedia = y[0]['channels'];
+    var facebook = "";
+    var twitter = "";
+    for(var i of socialMedia) {
+      if(i['type'].toLowerCase() == 'facebook'){
+        facebook = i['id'];
+      }
+      if(i['type'].toLowerCase() == 'twitter'){
+        twitter = i['id'];
+      }
+    }
+
+    arr.push(facebook);
+    arr.push(twitter);
       
-    
-    
     return arr;
   },
   getGovernor(address){
@@ -77,7 +117,24 @@ Meteor.methods({
       arr.push(y[0]['name']);
       arr.push(y[0]['party']);
       arr.push(y[0]['urls'][0]);
-    
+
+      var socialMedia = y[0]['channels'];
+      var facebook = "";
+      var twitter = "";
+   
+      for(var i of socialMedia) {
+  
+        if(i['type'].toLowerCase() == 'facebook'){
+          facebook  = i['id'];
+        }
+        if(i['type'].toLowerCase() == 'twitter'){
+          twitter = i['id'];
+        }
+      }
+
+      arr.push(facebook);
+      arr.push(twitter);
+
     
     
     return arr;
@@ -93,6 +150,20 @@ Meteor.methods({
       z.push(y[a]['name']);
       z.push(y[a]['party']);
       z.push(y[a]['urls'][0]);
+      var socialMedia = y[a]['channels'];
+      var facebook = "";
+      var twitter = "";
+      for(var i of socialMedia) {
+        if(i['type'].toLowerCase() == 'facebook'){
+          facebook = i['id'];
+        }
+        if(i['type'].toLowerCase() == 'twitter'){
+          twitter = i['id'];
+        }
+      }
+
+      arr.push(facebook);
+      arr.push(twitter);
       arr.push(z);
     }
     
@@ -214,9 +285,20 @@ Meteor.methods({
     return x;
   },
   upvoted(politician, body){
+
     var x = Posts.findOne({politician:politician, body:body});
-    console.log(x.stars+1);
-    Posts.upsert(x, {username:x.username, stars:(x.stars+1), body:body, heading:x.heading, date:x.date, politician:politician, tag:x.tag, answerVid: x.answerVid, answered: x.answered, answer:x.answer});
+    if(Meteor.user().profile.upvotedPosts.indexOf(x._id) == -1) {
+      console.log(x.stars+1);
+      Posts.upsert(x, {username:x.username, stars:(x.stars+1), body:body, heading:x.heading, date:x.date, politician:politician, tag:x.tag, answerVid: x.answerVid, answered: x.answered, answer:x.answer});
+
+      var updatedUpvotes = Meteor.user().profile.upvotedPosts;
+      updatedUpvotes.push(x._id);
+
+      Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.upvotedPosts": updatedUpvotes}});
+   }
+   else console.log("User already upvoted this post");
+
+    return x._id;
   },
   filter(tag, politician) {
     var x = Posts.find({politician:politician, tag:tag, answered:false}).fetch();
