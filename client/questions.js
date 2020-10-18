@@ -16,6 +16,8 @@ Session.set('politicianPost', []);
 Session.set('Sort', 'Newest');
 Session.set("header", "none");
 Session.set('tom', ' ');
+Session.set('file', '');
+Session.set('reader', '');
 
 Template.questionsPolitician.onRendered(function(){
 
@@ -26,6 +28,14 @@ Template.questionsPolitician.onRendered(function(){
  });
 
  Template.questionsUser.onRendered(function(){
+
+    this.autorun(function(){
+      Template.currentData();
+    });
+ 
+ });
+
+ Template.answered.onRendered(function(){
 
     this.autorun(function(){
       Template.currentData();
@@ -93,7 +103,8 @@ Template.questionsPolitician.events({
         console.log(Meteor.user().emails[0].address);
         event.target.getElementsByTagName("input")[0].value = '';
         event.target.getElementsByTagName("textarea")[0].value = '';
-        Meteor.call('reply', Meteor.user().profile.name, z, y, (err, res) => {
+       
+        Meteor.call('reply', Meteor.user().profile.name, z, y, Session.get('file'), Session.get('reader'), (err, res) => {
             if(err) {
                 console.log("Error");
             }
@@ -104,18 +115,15 @@ Template.questionsPolitician.events({
     },
     'change .custom-file-input': function(event, template){
         var func = this;
+        console.log("EVENT: ", event);
         var file = event.currentTarget.files[0];
         console.log("File" + file);
         var reader = new FileReader();
         reader.onload = function(fileLoadEvent) {
+            Session.set('file', file);
+            Session.set('reader', reader.result);
             console.log("File" + file + "Reader" + reader.result)
-           Meteor.call('fileupload', file, reader.result, Meteor.user().profile.name,
-           (err, res) => {
-               if(err) {
-                   console.log(err);
-               }
-               console.log("FILE UPLOADED");
-           });
+            alert("Your file was uploaded!");
         };
         reader.readAsBinaryString(file);
      }
@@ -245,7 +253,7 @@ Template.questionsUser.events({
 Template.answered.helpers({
     displayPosts: function() {
         
-        Meteor.call('answeredPosts', Session.get('politician'),
+        Meteor.call('answeredPosts', Session.get('politician'), Session.get('Filter tag'), Session.get('Sort'),
         (err, res) => {
             if(err) {
                 console.log("Err");
@@ -272,7 +280,7 @@ Template.answered.helpers({
     },
     getURL(){
         console.log(Session.get('tom'));
-        Session.get('tom');
+        return Session.get('tom');
     }
 })
 

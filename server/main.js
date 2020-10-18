@@ -48,14 +48,15 @@ Accounts.onCreateUser((options, user) => {
 });
 
 const storage = new Storage({
-  keyFilename: "C:\MyProjects\KEYS\key.json",
-  projectId: "politicianconnector"});
-
+  keyFilename: "C:\\MyProjects\\KEYS\\key.json",
+  projectId: "politicianconnector"
+});
 Meteor.startup(() => {
   // code to run on server at startup
 });
 
 Meteor.methods({
+  
   newPost(user, heading, blog, rep){
     var head = heading.replace(' ', "%20");
     var tag = HTTP.call('get', ('http://sidsrivastava.pythonanywhere.com/?string='+head)).content;
@@ -145,8 +146,10 @@ Meteor.methods({
     var y = x.data['officials'];
     var arr = [];
 
+
     for(var a=0; a<y.length; a++){
       var z = [];
+      console.log("Name: " + y[a]['name'])
       z.push(y[a]['name']);
       z.push(y[a]['party']);
       z.push(y[a]['urls'][0]);
@@ -162,11 +165,11 @@ Meteor.methods({
         }
       }
 
-      arr.push(facebook);
-      arr.push(twitter);
+      z.push(facebook);
+      z.push(twitter);
       arr.push(z);
     }
-    
+    console.log("Array: ", arr);
     
     return arr;
   },
@@ -189,6 +192,7 @@ Meteor.methods({
     console.log(fileInfo);
     console.log("TESTING THE NAME");
     console.log(fileInfo.name);
+    //fs.unlinkSync('tom.mp4');
     fs.writeFile('tom.mp4', new Buffer(fileData, 'binary'), (err, res) => {
       console.log('CALLBACK WORKED');
       
@@ -196,7 +200,7 @@ Meteor.methods({
     await storage.bucket(rep).upload('tom.mp4', {
       resumable: false, //set to true when uploading videos
       gzip:true,
-      destination:'malinowski2020.mp4'
+      destination:'malinowski20202.mp4'
     });
   },
   async getVideo(politician){
@@ -207,7 +211,7 @@ Meteor.methods({
       action: 'read',
       expires: Date.now() + 600 * 60 * 1000
     };
-    const [url] = await storage.bucket(rep).file('malinowski2020.mp4').getSignedUrl(options);
+    const [url] = await storage.bucket(rep).file('malinowski20202.mp4').getSignedUrl(options);
     return url;
   },
   async uploadVideo(politician, postHeader, filepath){
@@ -274,18 +278,62 @@ Meteor.methods({
   deleteStuff(){
     Posts.delete({});
   },
-  reply(politician, body, answer){
+  async reply(politician, body, answer, fileInfo, fileData){
+    var rep = politician.toLowerCase();
+    rep = rep.split(' ').join('-');
+    const [buckets] = await storage.getBuckets();
+    var contains = false;
+    var array = []
+    buckets.forEach(bucket => {
+      if(bucket.name == rep){
+        contains = true;
+      }
+      array.push(bucket.name);
+    });
+    if(!contains){
+      await storage.createBucket(rep);
+    }
+    
+    console.log(fileInfo);
+    console.log("TESTING THE NAME");
+    console.log(fileInfo.name);
+    //fs.unlinkSync('tom.mp4');
+    fs.writeFile('tom.mp4', new Buffer(fileData, 'binary'), (err, res) => {
+      console.log('CALLBACK WORKED');
+      
+    });
+    var name = rep+Date.now()+".mp4";
+    await storage.bucket(rep).upload('tom.mp4', {
+      resumable: false, //set to true when uploading videos
+      gzip:true,
+      destination:name
+    });
+    var link = "https://storage.cloud.google.com/"+rep+"/"+name;
     var x = Posts.findOne({politician:politician, body:body});
+    Posts.upsert(x, {username:x.username, stars:x.stars, body:body, heading:x.heading, date:x.date, politician:politician, tag:x.tag, answerVid: link, answered: true, answer:answer});
     console.log(x);
-    Posts.upsert(x, {username:x.username, stars:x.stars, body:body, heading:x.heading, date:x.date, politician:politician, tag:x.tag, answerVid: 'f', answered: true, answer:answer});
-
   },
-  answeredPosts(politician){
-    var x = Posts.find({politician:politician,answered:true}).fetch();
-    return x;
+  answeredPosts(politician, filter, sort){
+    if(filter == "None") {
+      var x = Posts.find({politician:politician, answered:true}).fetch();
+    }
+    else {
+      var x = Posts.find({politician:politician, tag:filter, answered:true}).fetch();
+    }
+    var y = Posts.find({}).fetch();
+    console.log("X"+x[0]);
+    console.log("Y: "+y[0]);
+    var finalArr = [];
+    if(sort == "Newest") {
+      finalArr = x.sort(Meteor.call('getDecSortOrder', 'date'));
+    }
+    else {
+      finalArr = x.sort(Meteor.call('getDecSortOrder', 'stars'));
+    }
+    return finalArr;
   },
   upvoted(politician, body){
-
+    console.log("BODY: ", body)
     var x = Posts.findOne({politician:politician, body:body});
     if(Meteor.user().profile.upvotedPosts.indexOf(x._id) == -1) {
       console.log(x.stars+1);

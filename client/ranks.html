@@ -14,7 +14,7 @@
                             <li class="lead" style="display: list-item">Click on the question title to reply to the
                                 question</li>
                         </ul> -->
-                        <p class="lead" style="margin-top: 1em;">Below is a ranked list of the polticians who answered
+                        <p class="lead" style="margin-top: 1em;">Below is a ranked list of the politicians who answered
                             the most questions this week. </p>
                         <ul>
                             <li class="lead" style=" display: list-item; margin-top: 1em;">The number on the top right
@@ -47,11 +47,12 @@
                         <!-- <h5 class="post-meta"><a href="https://www.booker.senate.gov/" target="_blank">Website:
                                 https://www.booker.senate.gov/</a></h5> -->
                        <div class="social-media-group">
+                           {{retSocials this}}
                             <span class="twitter-group">
-                                <a href="https://twitter.com/CoryBooker" target="_blank" class="twitter-title"><i
+                                <a href="{{getSocials.twitter}}" target="_blank" class="twitter-title"><i
                                         class="fa fa-twitter twitter-title"></i>
                                     Twitter</a></span>
-                            <a href="https://twitter.com/CoryBooker" target="_blank" class="fb-title"><i
+                            <a href="{{getSocials.facebook}}" target="_blank" class="fb-title"><i
                                     class="fa fa-facebook fb-title"></i>
                                 Facebook</a>
                         </div>

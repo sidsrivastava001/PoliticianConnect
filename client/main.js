@@ -118,6 +118,7 @@ Template.profileDropdown.events({
     console.log(Meteor.user());
     Session.set("showProfileDropdown", false);
     AccountsTemplates.logout();
+    Session.set("page", "Home");
   },
 });
 
